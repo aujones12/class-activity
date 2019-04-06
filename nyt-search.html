@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,500,600,700,800,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href=".//nyt-css.css">
+    <!-- <link rel="stylesheet" href=".//javascript.js"> -->
+    <!-- <link rel="stylesheet" href=".//reset.css"> -->
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- Main Bootstrap Search -->
+    <div class="container">
+
+        <!-- Jumbotron for Title -->
+        <div class="jumbotron" style="background-color: #2e84ed ; color: white;">
+            <h1 class="text-center"><strong><i class="fa fa-newspaper"></i> New York Times Search</strong></h1>
+        </div>
+
+        <!-- Row for Searching New York Times -->
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+                <!-- First panel is for handling the search parameters -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><strong><i class="fa  fa-list-alt"></i> Search Parameters</strong></h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <!-- Here we create an HTML Form for handling the inputs-->
+                        <form role="form">
+
+                            <!-- Here we create the text box for capturing the search term-->
+                            <div class="form-group">
+                                <label for="search">Search Term:</label>
+                                <input type="text" class="form-control" id="search-term">
+                            </div>
+
+                            <!-- Here we capture the number of records that the user wants to retrieve  -->
+                            <div class="form-group">
+                                <label for="pwd">Number of Records to Retrieve:</label>
+                                <select class="form-control" id="num-records-select">
+                                    <option value="1">1</option>
+                                    <!-- Setting the option for 5 as default -->
+                                    <option value="5" selected>5</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+
+                            <!-- Here we capture the Start Year Parameter-->
+                            <div class="form-group">
+                                <label for="start-year">Start Year (Optional):</label>
+                                <input type="text" class="form-control" id="start-year">
+                            </div>
+
+                            <!-- Here we capture the End Year Parameter -->
+                            <div class="form-group">
+                                <label for="end-year">End Year (Optional):</label>
+                                <input type="text" class="form-control" id="end-year">
+                            </div>
+
+                            <!-- Here we have our final submit button -->
+                            <button type="submit" class="btn btn-default" id="run-search"><i class="fa fa-search"></i>
+                                Search</button>
+                            <button type="button" class="btn btn-default" id="clear-all"><i class="fa fa-trash"></i>
+                                Clear Results</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- This row will handle all of the retrieved articles -->
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+
+                <!-- This panel will initially be made up of a panel and wells for each of the articles retrieved -->
+                <div class="panel panel-primary">
+
+                    <!-- Panel Heading for the retrieved articles box -->
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Top Articles</strong></h3>
+                    </div>
+
+                    <!-- This main panel will hold each of the resulting articles -->
+                    <div class="panel-body" id="well-section">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Region -->
+        <div class="row">
+            <div class="col-sm-12">
+
+                <!-- Line Break followed by closing -->
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#run-search").on("click", function (event) {
+                event.preventDefault();
+                var searchTerm = $("#search-term").val();  // Not sure this is working.
+                var numRecords = $("#num-records-select").val();
+
+                console.log(searchTerm);
+
+                var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + searchTerm + "&api-key=wSmjkACiC1ypQABsNv3zkxVLA7PlrGX1";
+
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function (response) {
+                    var results = response.response.docs;
+                    console.log(results);
+
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
